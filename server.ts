@@ -44,7 +44,7 @@ app.post("/api/chat", async (req, res) => {
 
     const contextPrompt = `
 You are the dedicated AI Wedding Concierge & Assistant for the wedding of ${weddingContext?.groomName || "Suyhong"} and ${weddingContext?.brideName || "Vinaya"}.
-Your name is "Sambot AI Assistant" (or ជំនួយការមង្គលការ Sambot).
+Your name is "Memento Assistant" (or ជំនួយការមង្គលការ Memento Assistant).
 You are polite, warm, celebratory, respectful of Khmer cultural traditions, and eager to assist wedding guests.
 
 Wedding Details:
@@ -69,36 +69,40 @@ Instructions:
 4. Keep responses concise, warm, helpful, and formatted with clean paragraphs or bullet points where suitable.
 `;
 
-    // If Gemini API Key is configured, attempt Gemini 3.8 Flash
+    // Attempt Gemini models with resilient fallback cascade for high demand (503)
     if (ai) {
-      try {
-        const chatHistory = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
-          role: m.role === "user" ? "user" : "model",
-          parts: [{ text: m.content }]
-        }));
+      const candidateModels = ["gemini-3.1-flash-lite", "gemini-3.8-flash"];
+      const chatHistory = messages.slice(0, -1).map((m: { role: string; content: string }) => ({
+        role: m.role === "user" ? "user" : "model",
+        parts: [{ text: m.content }]
+      }));
 
-        const contents = [
-          ...chatHistory,
-          {
-            role: "user",
-            parts: [{ text: lastUserMessage }]
-          }
-        ];
-
-        const response = await ai.models.generateContent({
-          model: "gemini-3.8-flash",
-          contents,
-          config: {
-            systemInstruction: contextPrompt,
-            temperature: 0.7,
-          }
-        });
-
-        if (response.text) {
-          return res.json({ reply: response.text });
+      const contents = [
+        ...chatHistory,
+        {
+          role: "user",
+          parts: [{ text: lastUserMessage }]
         }
-      } catch (geminiError) {
-        console.warn("Gemini API transient issue, using intelligent wedding knowledge fallback:", geminiError);
+      ];
+
+      for (const modelName of candidateModels) {
+        try {
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents,
+            config: {
+              systemInstruction: contextPrompt,
+              temperature: 0.7,
+            }
+          });
+
+          if (response.text) {
+            return res.json({ reply: response.text });
+          }
+        } catch (modelError: any) {
+          // Log concise warning and gracefully fall back to the next model or domain knowledge
+          console.warn(`[AI] Model ${modelName} encountered temporary error: ${modelError?.message || modelError}`);
+        }
       }
     }
 
@@ -124,7 +128,7 @@ Instructions:
 "សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខ បវរមហាប្រសើរ ជូនចំពោះគូស្វាមីភរិយាថ្មី សូមឱ្យស្រឡាញ់គ្នារហូតដល់ចាស់កោងខ្នង!"
 (Wishing you both endless happiness, prosperity, love, and longevity together!)`;
     } else {
-      fallbackReply = `Hello and warm greetings! I am Sambot, the AI Wedding Concierge for Suyhong & Vinaya. You can ask me anything about the event schedule, venue location, parking, dress code guidelines, or how to RSVP. How may I assist you today?`;
+      fallbackReply = `Hello and warm greetings! I am Memento Assistant, the AI Wedding Concierge for Suyhong & Vinaya. You can ask me anything about the event schedule, venue location, parking, dress code guidelines, or how to RSVP. How may I assist you today?`;
     }
 
     return res.json({ reply: fallbackReply });

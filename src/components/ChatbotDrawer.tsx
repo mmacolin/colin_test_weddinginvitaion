@@ -13,7 +13,7 @@ export const ChatbotDrawer: React.FC<ChatbotDrawerProps> = ({ isOpen, onClose, w
     {
       id: 'msg-welcome',
       role: 'model',
-      content: `សួស្តី! Hello and warm welcome! I am the Sambot AI Wedding Concierge for the wedding of ${wedding.groomName} & ${wedding.brideName}.\n\nHow can I help you today? You can ask me about the schedule of ceremonies, venue directions, dress code recommendations, or request an auspicious Khmer wedding blessing!`,
+      content: `សួស្តី! Hello and warm welcome! I am Memento Assistant, the AI Wedding Concierge for the wedding of ${wedding.groomName} & ${wedding.brideName}.\n\nHow can I help you today? You can ask me about the schedule of ceremonies, venue directions, dress code recommendations, or request an auspicious Khmer wedding blessing!`,
       timestamp: 'Just now',
     },
   ]);
@@ -127,7 +127,7 @@ export const ChatbotDrawer: React.FC<ChatbotDrawerProps> = ({ isOpen, onClose, w
             </div>
             <div>
               <h3 className="text-sm font-serif font-semibold text-[#f1e1be] flex items-center gap-1.5">
-                <span>Sambot AI Concierge</span>
+                <span>Memento Assistant</span>
                 <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
               </h3>
               <p className="text-[10px] text-stone-300">
@@ -190,7 +190,7 @@ export const ChatbotDrawer: React.FC<ChatbotDrawerProps> = ({ isOpen, onClose, w
           {isLoading && (
             <div className="flex items-center gap-2 p-3 rounded-2xl bg-[#253939] border border-[#c5a059]/20 max-w-[70%]">
               <RefreshCw className="w-3.5 h-3.5 text-[#c5a059] animate-spin" />
-              <span className="text-xs text-stone-300">Sambot is thinking...</span>
+              <span className="text-xs text-stone-300">Memento Assistant is thinking...</span>
             </div>
           )}
 

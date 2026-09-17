@@ -1,6 +1,6 @@
 {
   "name": "Digital Wedding Invitation & Chatbot",
-  "description": "An interactive digital wedding invitation with ceremony schedule, live countdown, photo gallery, guest RSVP, wishes wall, and an AI wedding concierge chatbot inspired by Sambot.",
+  "description": "An interactive digital wedding invitation with ceremony schedule, live countdown, photo gallery, guest RSVP, wishes wall, and Memento Assistant AI wedding concierge by Memento Cambodia.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

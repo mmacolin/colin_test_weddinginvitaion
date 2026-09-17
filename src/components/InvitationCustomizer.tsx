@@ -49,7 +49,7 @@ export const InvitationCustomizer: React.FC<InvitationCustomizerProps> = ({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-5 space-y-4 text-xs">
           <div className="p-3 rounded-xl bg-stone-900/60 border border-stone-700/60 text-stone-300">
-            Customize any detail below to test how easily Sambot digital invitations can be created, styled, and customized in React!
+            Customize any detail below to test how easily Memento Cambodia digital invitations can be created, styled, and customized in React!
           </div>
 
           <div className="grid grid-cols-2 gap-3">

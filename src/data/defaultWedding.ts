@@ -19,8 +19,8 @@ export const initialWeddingData: WeddingData = {
   bannerQuoteEnglish: "Together with their beloved parents, Suyhong & Vinaya cordially request the honor of your presence to celebrate their holy matrimony and share in the joyous blessings.",
   dressCodeMorning: "Traditional Khmer Attire / Smart Formal",
   dressCodeEvening: "Formal Evening Gown & Suit (Color Palette: Gold, Emerald Green, Champagne, Rose Gold)",
-  contactPhone: "+855 81 711 611",
-  contactTelegram: "t.me/sambot_online"
+  contactPhone: "+855 87 50 33 53",
+  contactTelegram: "t.me/memento_cambodia"
 };
 
 export const defaultCeremonies: CeremonyItem[] = [

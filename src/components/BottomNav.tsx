@@ -57,7 +57,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           id="nav-btn-ai-concierge"
           onClick={onOpenChat}
           className="relative flex flex-col items-center justify-center px-3 py-1 rounded-full bg-gradient-to-r from-[#c5a059] to-[#b38d47] text-stone-950 font-semibold shadow-lg hover:brightness-110 transition-all cursor-pointer"
-          title="Ask Sambot AI Concierge"
+          title="Ask Memento Assistant"
         >
           <div className="flex items-center gap-1">
             <Bot className="w-4 h-4 text-stone-950" />

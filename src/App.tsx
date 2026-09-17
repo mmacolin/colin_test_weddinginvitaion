@@ -22,10 +22,16 @@ import { InvitationCustomizer } from './components/InvitationCustomizer';
 
 export default function App() {
   const [wedding, setWedding] = useState<WeddingData>(() => {
-    const saved = localStorage.getItem('sambot_wedding_data');
+    const saved = localStorage.getItem('memento_wedding_data') || localStorage.getItem('sambot_wedding_data');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Ensure new contact phone is reflected
+        if (parsed.contactPhone === "+855 81 711 611" || !parsed.contactPhone) {
+          parsed.contactPhone = initialWeddingData.contactPhone;
+          parsed.contactTelegram = initialWeddingData.contactTelegram;
+        }
+        return { ...initialWeddingData, ...parsed };
       } catch {
         return initialWeddingData;
       }
@@ -36,7 +42,7 @@ export default function App() {
   const [isCoverOpen, setIsCoverOpen] = useState<boolean>(false);
   const [shouldAutoPlayMusic, setShouldAutoPlayMusic] = useState<boolean>(false);
   const [wishes, setWishes] = useState<WishItem[]>(() => {
-    const saved = localStorage.getItem('sambot_wishes');
+    const saved = localStorage.getItem('memento_wishes') || localStorage.getItem('sambot_wishes');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -48,7 +54,7 @@ export default function App() {
   });
 
   const [savedRsvp, setSavedRsvp] = useState<RsvpEntry | null>(() => {
-    const saved = localStorage.getItem('sambot_rsvp');
+    const saved = localStorage.getItem('memento_rsvp') || localStorage.getItem('sambot_rsvp');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -66,16 +72,16 @@ export default function App() {
 
   // Persistence
   useEffect(() => {
-    localStorage.setItem('sambot_wedding_data', JSON.stringify(wedding));
+    localStorage.setItem('memento_wedding_data', JSON.stringify(wedding));
   }, [wedding]);
 
   useEffect(() => {
-    localStorage.setItem('sambot_wishes', JSON.stringify(wishes));
+    localStorage.setItem('memento_wishes', JSON.stringify(wishes));
   }, [wishes]);
 
   useEffect(() => {
     if (savedRsvp) {
-      localStorage.setItem('sambot_rsvp', JSON.stringify(savedRsvp));
+      localStorage.setItem('memento_rsvp', JSON.stringify(savedRsvp));
     }
   }, [savedRsvp]);
 
@@ -302,7 +308,7 @@ export default function App() {
               </div>
               <div>
                 <h3 className="text-sm sm:text-base font-serif font-semibold text-[#f1e1be]">
-                  Have Questions? Ask Sambot AI Concierge
+                  Have Questions? Ask Memento Assistant
                 </h3>
                 <p className="text-xs text-stone-300">
                   Instant answers on ceremony rites, dress code, parking &amp; custom Khmer blessings.
@@ -333,7 +339,7 @@ export default function App() {
           </p>
 
           <p className="text-[10px] text-stone-500 pt-2 border-t border-stone-800/80">
-            Inspired by Sambot Online Digital Wedding Invitations • Crafted with React &amp; Gemini AI
+            Powered by Memento Cambodia Digital Wedding Invitations • Crafted with React &amp; Gemini AI
           </p>
         </footer>
       </div>
